@@ -9,7 +9,7 @@ import java.util.Date;
  * The IRElection class to be used to produce
  * Audit and Media File
  */
-public class IRElection extends IElection{
+public class IRElection extends IElection {
     private Candidate winner;
     private ArrayList<Candidate> candidates;
     private Date date;
@@ -34,7 +34,7 @@ public class IRElection extends IElection{
     }
 
     /**
-     * Method to decide the winner of a tie between Candidates
+     * Method to decide the winner of a tie between Candidates in an IR Election
      * @param a One of the two Candidates in the tiebreak
      * @param b One of the two Candidates in the tiebreak
      * @return One of the two candidates which won the tiebreaker at random
@@ -47,6 +47,15 @@ public class IRElection extends IElection{
         return c;
     }
 
+    /**
+     * Method to decide the winner of a tie between Candidates in an CPL Election
+     * @param parties
+     * @param seatNo
+     * @return
+     */
+    public Party winnnerTieDecider(Party[] parties, int seatNo) {
+        throw new UnsupportedOperationException("invalid operation for Tie Breaker in IR Election");
+    }
     /**
      * Method to display the Winner of the IR Election to the terminal
      */

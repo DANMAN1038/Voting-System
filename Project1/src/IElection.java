@@ -1,10 +1,11 @@
-public class IElection extends Voting{
+import java.util.Date;
+
+public abstract class IElection<T>{
     private Date date;
 
 
-    public Party winnnerTieDecider(Party[] parties, int seatNo) {}
+    public abstract Party winnnerTieDecider(Party[] parties, int seatNo);
+    public abstract Candidate winnnerTieDecider(Candidate a, Candidate b);
 
-    public Candidate winnnerTieDecider(Candidate Candidate) {}
-
-    public void displayWinner() {}
+    public abstract void displayWinner();
 }

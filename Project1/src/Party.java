@@ -10,6 +10,11 @@ public class Party {
         this.candidates = candidates;
     }
 
+    public Party(Integer votes, String party) {
+        this.votes = votes;
+        this.party = party;
+    }
+
     public String getParty() {
         return this.party;
     }

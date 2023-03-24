@@ -9,38 +9,72 @@ import java.util.List;
 public class Voting {
     private Integer totalC;
     private Integer totalP;
-    private String electionType;
-    private File filePath;
+    private static String electionType;
+    private static File filePath;
     private List<Candidate> candidates;
     private List<Party> parties;
 
-    public Voting(String filePath, Integer totalC, Integer totalP, String electionType, List<Party> parties, List<Candidate> candidates) {
-        this.filePath = filePath;
-        this.totalC = totalC;
-        this.totalP = totalP;
-        this.electionType = electionType;
-        this.parties = parties;
-        this.candidates = candidates;
+    public String getElectionType() {
+        return electionType;
     }
-    public void checkFileType() {
-        if (!filePath.endsWith(".csv")) {
-            System.out.println("The file you provided is not a CSV file. Please provide a CSV file.");
+
+    public static void setElectionType(String electType) {
+        electionType = electType;
+    }
+
+    public static boolean checkFileType(String file) {
+        File f = new File(file);
+        if (file.endsWith(".csv") && f.exists()) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
-    public void userPrompter() {
+
+    public static boolean electionTypeChecker(String type) {
+        if (type.equals("IR") || type.equals("CPL")) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public File getFilePath() {
+        return filePath;
+    }
+
+    public static void setFilePath(File electFile) {
+        filePath = electFile;
+    }
+
+    public static void userPrompter() {
         Scanner userInput = new Scanner(System.in);
-        System.out.print("Enter the Election file name with extension here: ");
-        File electionFile = new File(userInput.nextLine());
-        this.filePath = filePath;
-        scanner.nextLine(); // consume newline
-        System.out.print("Enter the type of election: ");
-        String electionType = scanner.nextLine();
-        this.electionType = electionType;
+        System.out.println("Enter the Election file name with extension here: ");
+        String file = userInput.nextLine();
+        if (!checkFileType(file)) {
+            System.err.println("The file you provided is not a CSV file or does not exist in the given directory. Please" +
+                                " enter a valid file");
+            userPrompter();
+            return;
+        }
+        File electionFile = new File(file);
+        setFilePath(electionFile);
+        System.out.println("Next can you provide the type of election being run \r\nWrite \"IR\" for Instant Runoff Election \r\n" +
+                            "Write \"CPL\" for Close Party Listing Election ");
+        String type = userInput.nextLine();
+        while (!electionTypeChecker(type)) {
+            System.err.println("You have provided and invalid election type please try again ");
+            type = userInput.nextLine();
+        }
+        setElectionType(type);
+        System.out.println("Thank you, the election is now being processed...");
     }
 
     public List<Candidate> candidateParser() {
         try {
-            File IRFile = new File(filePath);
+            File IRFile = getFilePath();
 
             //Creating Scanner instance to read File in Java
             Scanner IR = new Scanner(IRFile);
@@ -77,10 +111,13 @@ public class Voting {
     }
     public List<Party> partyParser() {
         try {
-            File partyFile = new File(filePath);
+            File partyFile = getFilePath();
 
             //Creating Scanner instance to read File in Java
             Scanner partyScanner = new Scanner(partyFile);
+
+            //Starting votes of each party
+            int startingVotes = 0;
 
             //Reading each line of the file using Scanner class
             int lineNumber = 1;
@@ -92,7 +129,7 @@ public class Voting {
                     int end_index = line.indexOf(')', begin_index);
                     while (begin_index != 0 && end_index != -1) {
                         String partyName = line.substring(begin_index, end_index);
-                        Party party = new Party(partyName);
+                        Party party = new Party(startingVotes, partyName);
                         this.parties.add(party);
                         begin_index = line.indexOf('(', end_index) + 1;
                         end_index = line.indexOf(')', begin_index);
@@ -140,12 +177,8 @@ public class Voting {
     //
 
     public static void main(String[] args) {
-        Voting voting = new Voting(null, null, null, null, new ArrayList<Party>(), new ArrayList<Candidate>());
-        voting.userPrompter();
-        // Candidate[] candidates = voting.candidateParser();
-        // Party[] parties = voting.partyParser();
-        // int result = voting.candidatePerParty(candidates, parties);
-        // System.out.println("Ratio is: " + result);
+        userPrompter();
+
     }
 }
 

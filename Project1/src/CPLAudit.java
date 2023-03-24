@@ -1,4 +1,4 @@
-public class CPLAudit extends CPLElection{
+public class CPLAudit {
     private CPLElection election;
 
     public CPLAudit(CPLElection election) {

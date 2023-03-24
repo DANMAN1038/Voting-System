@@ -23,8 +23,8 @@ public class Candidate {
 
     public Integer getVotes() {
         int voteTotal = 0;
-        for(int x = 0; x < votes.size(); x++) {
-            if(votes.get(x).getPreference().get(0) == (this.name)) {
+        for (int x = 0; x < votes.size(); x++) {
+            if (votes.get(x).getPreference().get(0) == (this.name)) {
                 voteTotal++;
             }
         }
@@ -34,3 +34,4 @@ public class Candidate {
     public Integer getRank() {
         return this.rank;
     }
+}

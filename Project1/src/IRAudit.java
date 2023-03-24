@@ -17,6 +17,11 @@ public class IRAudit {
      * @param elec
      */
     //SAME AS produceMediaIR, TO BE REVISED
+    //TODO Add how many votes a candidate had
+    //TODO Add number of Candidates
+    //TODO Add number of ballots
+    //TODO Audit file should show how the election progressed
+    //TODO Audit file should show the order of removal of candidates in IR and what ballots were redistributed
     public void produceAuditIT(IRElection elec) {
         elec = this.election;
         File audit = new File("Audit.txt");
@@ -27,7 +32,7 @@ public class IRAudit {
             writer.write("Election Date: " + this.election.getDate() + "\r\n");
             writer.write("Candidates Participated:\r\n");
             for (Candidate i : candidates) {
-                writer.write(i.getParty().getParty() + ": " + i.getName() + "\r\n");
+                writer.write(i.getParty() + ": " + i.getName() + "\r\n");
             }
             writer.write("The Winner of The Election Was " + elec.getWinner().getName() + "!");
             System.out.println("Successfully created the Audit File");
@@ -53,7 +58,7 @@ public class IRAudit {
             writer.write("Election Date: " + this.election.getDate() + "\r\n");
             writer.write("Candidates Participated:");
             for (Candidate i : candidates) {
-                writer.write(i.getParty().getParty() + ": " + i.getName() + "\r\n");
+                writer.write(i.getParty() + ": " + i.getName() + "\r\n");
             }
             writer.write("The Winner of The Election Was " + elec.getWinner().getName() + "!");
             System.out.println("Successfully created the Media File");

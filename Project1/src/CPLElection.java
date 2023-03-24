@@ -95,6 +95,7 @@ public class CPLElection {
 
     public Boolean compareRemainders(HashMap<Party, Integer> remainders) {
         //TODO
+        return null;
     }
 
     public void assignRemainderSeats(HashMap<Party, Integer> remainders) {
