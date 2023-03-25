@@ -1,3 +1,5 @@
+package election;
+import objects.*;
 /** Abstract Election class.
  * @author azamx016
 */

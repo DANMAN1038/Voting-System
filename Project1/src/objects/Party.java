@@ -1,3 +1,4 @@
+package objects;
 public class Party {
     private Integer votes;
     private String party;
