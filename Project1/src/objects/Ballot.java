@@ -32,6 +32,12 @@ public class Ballot {
     public Ballot(ArrayList<Integer> votes) {
         this.votes = votes;
     }
+
+    /**
+     * Constructor for Ballot for election where named Candidate prefrence is given
+     * @param preference ordered candidate prefrence
+     * @param size size of array
+     */
     public Ballot(ArrayList<String> preference, int size) {
         this.preference = preference;
     }

@@ -3,6 +3,8 @@ import java.awt.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import objects.*;
 
@@ -34,38 +36,68 @@ public class IRElection extends IElection {
      * @return The Candidate that won the Election according to the Instant Runoff rules
      */
     public ArrayList<Candidate> electionIR(ArrayList<Ballot> ballots) {
-        ArrayList<Integer> test = new ArrayList<>();
+        ArrayList<Integer> votes = new ArrayList<>();
         ArrayList<Candidate> allCandidates = this.candidates;
-       // allCandidates.get(0).getBallot().getVotes().clear();
-       // allCandidates.get(1).getBallot().getVotes().clear();
-       // allCandidates.get(2).getBallot().getVotes().clear();
-      //  allCandidates.get(3).getBallot().getVotes().clear();
 
-        int indexer = -1;
+
+      //  int indexer = -1;
         for (int x = 1; x < allCandidates.size() + 1; x++) {
-            indexer ++;
+           // indexer ++;
             for (int i = 0; i < allCandidates.size(); i++) {
                 int amount = voteCounter(ballots, i, x);
-                System.out.println(amount);
-                //System.out.println(i +" " + x + " " + amount);
-                if (i == 1) {
-                   test.add(amount);
-                }
-                allCandidates.get(i).getBallot().getVotes().add(amount);
-              // allCandidates.get(i).getBallot().getVotes().set(indexer, amount);
-               // allCandidates.get(i).getBallot().getVotes().clear();
-
+                votes.add(amount);
 
             }
-            System.out.println("LOOP");
+
         }
-System.out.println("Start");
-        for (int i = 0; i < test.size(); i++) {
-            System.out.println(test.get(i));
-        }
+        ArrayList<ArrayList<Integer>> rankings = createCandidateBallots(votes);
+        setVotes(allCandidates, rankings);
         return allCandidates;
     }
 
+    /**
+     * Array list to set the votes for all the candidate object
+     * @param candidates all the candidates
+     * @param votes the votes being set
+     */
+    public static void setVotes(ArrayList<Candidate> candidates, ArrayList<ArrayList<Integer>> votes) {
+        if (candidates.size() != votes.size()) {
+            throw new IllegalArgumentException("ArrayLists must have the same size.");
+        }
+        for (int i = 0; i < candidates.size(); i++) {
+            candidates.get(i).setRanks(votes.get(i));
+        }
+    }
+    /**
+     * Creates the candidate ballot array lists
+     * @param numbers the ordered votes every candidate got
+     * @return
+     */
+    public static ArrayList<ArrayList<Integer>> createCandidateBallots(ArrayList<Integer> numbers) {
+        ArrayList<ArrayList<Integer>> arrayListOfArrayLists = new ArrayList<ArrayList<Integer>>();
+        for (int i = 0; i < 4; i++) {
+            arrayListOfArrayLists.add(new ArrayList<Integer>());
+        }
+        int stepSize = 3;
+        int[] currentIndexes = new int[4];
+        Arrays.fill(currentIndexes, -1);
+        for (int i = 0; i < numbers.size(); i++) {
+            int index = i % 4; // Get the index of the ArrayList to add to
+            ArrayList<Integer> currentArrayList = arrayListOfArrayLists.get(index);
+            if (currentIndexes[index] < 0) { // If it's the first element for this ArrayList
+                currentArrayList.add(numbers.get(i)); // Add the current number to the ArrayList
+                currentIndexes[index] = i; // Save the current index for this ArrayList
+            } else if (currentArrayList.size() < 4) { // If the ArrayList is not yet complete
+                int nextIndex = currentIndexes[index] + stepSize; // Get the next index to add to
+                if (nextIndex >= numbers.size()) { // If the next index is out of bounds, we're done
+                    break;
+                }
+                currentArrayList.add(numbers.get(nextIndex)); // Add the current number to the ArrayList
+                currentIndexes[index] = nextIndex; // Save the current index for this ArrayList
+            }
+        }
+        return arrayListOfArrayLists;
+    }
     /**
      * Counts how many ranked votes a candidate recieved
      * @param ballots the votes from the election that will be transferred to the candidates
@@ -81,6 +113,59 @@ System.out.println("Start");
             }
         }
         return count;
+    }
+
+    /**
+     * Method to decide the winner of the election
+     * @param candidates
+     * @return
+     */
+    public Candidate decideWinner(ArrayList<Candidate> candidates) {
+        ArrayList<Integer> firstIndices = new ArrayList<Integer>();
+        for (Candidate c : candidates) {
+            ArrayList<Integer> list = c.getRanks();
+            int first = list.get(0);
+            firstIndices.add(first);
+        }
+
+        while (!candidates.isEmpty()) {
+            int max = Collections.max(firstIndices);
+            int index = firstIndices.indexOf(max);
+            Candidate candidate = candidates.get(index);
+            ArrayList<Integer> list = candidate.getRanks();
+            boolean isMax = true;
+            for (int i = 0; i < firstIndices.size(); i++) {
+                if (i == index) {
+                    continue;
+                }
+                int combined = list.get(0) + candidates.get(i).getRanks().get(0);
+                if (combined > max) {
+                    isMax = false;
+                    break;
+                }
+            }
+            if (isMax) {
+                return candidate;
+            } else {
+                candidates.remove(index);
+                firstIndices.remove(index);
+            }
+            if (candidates.isEmpty()) {
+                break;
+            }
+            int min = Collections.min(firstIndices);
+            int minIndex = firstIndices.indexOf(min);
+            Candidate minCandidate = candidates.get(minIndex);
+            candidates.remove(minIndex);
+            firstIndices.remove(minIndex);
+            int secondMax = Collections.max(firstIndices);
+            int secondIndex = firstIndices.indexOf(secondMax);
+            Candidate secondCandidate = candidates.get(secondIndex);
+            int combined = minCandidate.getRanks().get(0) + secondCandidate.getRanks().get(0);
+            candidates.add(minIndex, minCandidate);
+            firstIndices.add(minIndex, combined);
+        }
+        return null;
     }
 
     /**

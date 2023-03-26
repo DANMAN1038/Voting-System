@@ -208,13 +208,10 @@ public class Voting {
                 lineNumber++;
             }
             IR.close();
-            Ballot votes = new Ballot(new ArrayList<Integer>(totalC));
-            votes.getVotes().add(0);
-            votes.getVotes().add(0);
-            votes.getVotes().add(0);
-            votes.getVotes().add(0);
+
             //for statement for creating the Candidate Variables with the Candidate names and parties
             for (int i =0; i < candidateLines.size() - 1; i += 2){
+                ArrayList<Integer> votes = new ArrayList<Integer>();
                 Candidate candidate = new Candidate(candidateLines.get(i), candidateLines.get(i + 1), votes);
                 candidates.add(candidate);
             }
@@ -265,23 +262,27 @@ public class Voting {
 
     }
 
-    public Ballot ballParser() {
 
-        return null;
-    }
-
-
+    /**
+     * Main method where program is ran
+     * @param args
+     */
     public static void main(String[] args) {
         userPrompter();
         candidateParser();
         switch (electionType) {
             case "IR":
-                IRElection election = new IRElection(null, candidates, null);
+                ArrayList<Candidate> cands = candidates;
+                IRElection election = new IRElection(null, cands, null);
                 ArrayList<Candidate> c = election.electionIR(ballots);
-                //for (int i = 0; i < c.size(); i++) {
-                for (int i = 0; i < c.size(); i++) {
-                    System.out.println(c.get(i).getBallot().getVotes());
-                }
+            candidates = c;
+            Candidate w = election.decideWinner(candidates);
+            election.setWinner(w);
+            election.displayWinner();
+            System.out.println(election.getCandidates().size());
+            IRAudit auditIR = new IRAudit();
+
+                auditIR.produceAuditIT(election);
 
                     break;
                     case "CPL":
