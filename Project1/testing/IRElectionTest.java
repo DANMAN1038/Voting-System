@@ -30,4 +30,23 @@ public class IRElectionTest {
         assertEquals("The first candidate is returned", candidates.get(1), election.getCandidates().get(1));
         assertEquals("The first candidate is returned", candidates.get(2), election.getCandidates().get(2));
     }
+    @Test
+    public void DecideElectionWInner() {
+        candidates.add(a);
+        candidates.add(b);
+        candidates.add(c);
+        candidates.get(0).getRanks().add(5);
+        candidates.get(0).getRanks().add(3);
+        candidates.get(0).getRanks().add(2);
+        candidates.get(1).getRanks().add(2);
+        candidates.get(1).getRanks().add(3);
+        candidates.get(1).getRanks().add(1);
+        candidates.get(2).getRanks().add(0);
+        candidates.get(2).getRanks().add(0);
+        candidates.get(2).getRanks().add(1);
+        Candidate actual = election.decideWinner(candidates);
+        Candidate expected = candidates.get(0) ;
+        assertEquals("The winning candidate is returned", expected, actual);
+
+    }
 }
