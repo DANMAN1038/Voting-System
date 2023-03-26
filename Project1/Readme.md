@@ -1,1 +1,12 @@
-Test Push
+How to run:
+
+Click run button in IDE (typically a play button already located on screen, or through the Run tab at the top)
+Enter file location, (example: /home/syed0053/CSCI5801/repo-Team20/Project1/misc/CPL_Election.csv)
+If the election is an Instant Runoff election, enter , otherwise enter for Closed Party Listing
+Election will run and automatically process the associated algorithm as well as creating the Audit and Media file
+The newly created files should be viewable in the same directory as the SRS, SDD, etc.
+Notes:
+
+This program uses today's date for elections as dates are not provided in the input file
+This program also doesn't include candidates in the CPL election as they are also not in the input file
+Both Audit and Media files will be generated on the home direcotry of the project
