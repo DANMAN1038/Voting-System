@@ -273,16 +273,15 @@ public class Voting {
         switch (electionType) {
             case "IR":
                 ArrayList<Candidate> cands = candidates;
-                IRElection election = new IRElection(null, cands, null);
+                IRElection election = new IRElection(null, cands);
                 ArrayList<Candidate> c = election.electionIR(ballots);
-            candidates = c;
-            Candidate w = election.decideWinner(candidates);
+            cands = c;
+            Candidate w = election.decideWinner(cands);
             election.setWinner(w);
+            election.setCandidates(candidates);
             election.displayWinner();
-            System.out.println(election.getCandidates().size());
             IRAudit auditIR = new IRAudit();
-
-                auditIR.produceAuditIT(election);
+                auditIR.produceAuditIR(election);
 
                     break;
                     case "CPL":

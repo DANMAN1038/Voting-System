@@ -13,7 +13,7 @@ public class IRElectionTest {
     private Candidate a = new Candidate("Dave", "R", votes);
     private Candidate b = new Candidate("Jack", "L", votes);
     private Candidate c = new Candidate("Jim", "D", votes);
-    private IRElection election = new IRElection(a, candidates, date);
+    private IRElection election = new IRElection(a, candidates);
 
     @Test
     public void testElectionWinner() {

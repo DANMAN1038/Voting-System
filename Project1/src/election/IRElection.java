@@ -25,7 +25,7 @@ public class IRElection extends IElection {
      * @param candidates All candidates participating int the election
      * @param date The Date the election was decided
      */
-    public IRElection(Candidate winner, ArrayList<Candidate> candidates, Date date) {
+    public IRElection(Candidate winner, ArrayList<Candidate> candidates) {
         this.winner = winner;
         this.candidates = candidates;
         this.date = date;

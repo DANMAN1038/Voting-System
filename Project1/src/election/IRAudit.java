@@ -26,7 +26,7 @@ public class IRAudit {
     //TODO Add number of ballots
     //TODO Audit file should show how the election progressed
     //TODO Audit file should show the order of removal of candidates in IR and what ballots were redistributed
-    public void produceAuditIT(IRElection elec) {
+    public void produceAuditIR(IRElection elec) {
         File audit = new File("Audit.txt");
         try {
             Date today = new Date();
@@ -40,6 +40,8 @@ public class IRAudit {
             }
             writer.write("The Winner of The Election Was " + elec.getWinner().getName() + "!");
             System.out.println("Successfully created the Audit File");
+            writer.flush();
+            writer.close();
         }
         catch (IOException e) {
             System.err.println("Something went wrong");
@@ -67,6 +69,8 @@ public class IRAudit {
             }
             writer.write("The Winner of The Election Was " + elec.getWinner().getName() + "!");
             System.out.println("Successfully created the Media File");
+            writer.flush();
+            writer.close();
         }
         catch (IOException e) {
             System.err.println("Something went wrong");
