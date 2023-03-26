@@ -1,10 +1,8 @@
 import static org.junit.Assert.*;
 import org.junit.Test;
 import objects.*;
-import java.util.ArrayList;
 public class CandidateTest {
 
-    private ArrayList<String> testList = new ArrayList<String>();
     private Candidate Dave = new Candidate(4, "Dave", "Democrat", null);
 
     @Test

@@ -9,7 +9,7 @@ public class Candidate {
     private String party;
     private ArrayList<Ballot> votes;
 
-    /** Creates a candidate with specified informatino.
+    /** Creates a candidate with specified information.
         * @param rank candidate rank.
         * @param name candidate party.
         * @param party candidate party.
