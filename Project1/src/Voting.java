@@ -5,7 +5,8 @@ import java.util.Scanner;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+import objects.*;
+import election.*;
 public class Voting {
     private Integer totalC;
     private Integer totalP;

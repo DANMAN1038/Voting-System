@@ -1,3 +1,5 @@
+package election;
+import objects.*;
 public class CPLAudit {
     private CPLElection election;
 

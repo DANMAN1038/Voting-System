@@ -1,9 +1,11 @@
+package election;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.lang.Math;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import objects.*;
 
 public class CPLElection {
     private HashMap<String, Integer> winner;

@@ -1,17 +1,21 @@
+package objects;
 import java.util.ArrayList;
+/** Ballot class.
+ * @author azamx016
+*/
 public class Ballot {
-    // private Integer amount;
     private ArrayList<String> preference;
 
+    /** Stors ballot information
+        * @param preference ballot preference.
+    */
     public Ballot(ArrayList<String> preference) {
-        //this.amount = amount;
         this.preference = preference;
     }
 
-    // public Integer getAmount() {
-    //     return this.amount;
-    // }
-
+    /** updates the preference based on candidate array list
+        * @param candidate array list of type candidate.
+    */
     public void updatePref(ArrayList<Candidate> candidates) {
         ArrayList<String> newPref = new ArrayList<String>();
         for(int x = 0; x < preference.size(); x++) {
@@ -24,6 +28,9 @@ public class Ballot {
         this.preference = newPref;
     }
 
+    /** gets the preference 
+        * @return a string array list for the preference.
+    */
     public ArrayList<String> getPreference() {
         return this.preference;
     }
