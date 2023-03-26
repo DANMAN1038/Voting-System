@@ -7,7 +7,7 @@ import java.util.List;
 public class BallotTest {
 
     private ArrayList<String> list = new ArrayList<String>(Arrays.asList("a", "b", "c"));
-    private Ballot test = new Ballot(list, 3);
+    private Ballot test = new Ballot(list);
 
     @Test
     public void testBallotPreference() {
