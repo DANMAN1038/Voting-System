@@ -12,13 +12,13 @@ public class PartyTest {
     }
 
     @Test
-    public void testCandidateParty() {
+    public void testPartyVotes() {
         int expectedVotes = Democrat.getVotes();
         assertEquals("The votes of the party is returned", expectedVotes, 4);
     }
 
     @Test
-    public void testCandidateRank() {
+    public void testPartyAddVotes() {
         Democrat.addPartyVotes(4);
         int expectedVotes = Democrat.getVotes();
         assertEquals("The votes of the party is returned", expectedVotes, 8);

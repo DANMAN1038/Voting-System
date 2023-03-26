@@ -10,7 +10,7 @@ public class BallotTest {
     private Ballot test = new Ballot(list);
 
     @Test
-    public void testPartyName() {
+    public void testBallotPreference() {
         ArrayList<String> expected = test.getPreference();
         assertEquals("The list of preferences is returned", expected, list);
     }
