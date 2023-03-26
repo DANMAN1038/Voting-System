@@ -1,7 +1,9 @@
+package election;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import objects.*;
 
 /**
  * @author coll1396
@@ -47,6 +49,7 @@ public class IRAudit {
      * Method to produce the Media file for an IR Election
      * @param elec
      */
+    //TODO show winner, party and total votes everyone got
     //SAME AS produceAuditIT, TO BE REVISED
     public void produceMediaIR(IRElection elec) {
         elec = this.election;
