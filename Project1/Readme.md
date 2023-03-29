@@ -1,3 +1,6 @@
+## Important Change Branch
+*The finalize project after deadlineis located in the "Update-Branch"
+
 ## How to run:
 
 Click run button in IDE (typically a play button already located on screen, or through the Run tab at the top)
