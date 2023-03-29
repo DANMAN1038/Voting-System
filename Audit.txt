@@ -1,7 +1,0 @@
-Election Conducted: Instant Runoff Election 
-Election Date: Sun Mar 26 17:26:25 CDT 2023
-Candidates Participated:
-Republican: Kleinberg
-Independent: Chou
-Liberal: Roycle
-The Winner of The Election Was Kleinberg!
