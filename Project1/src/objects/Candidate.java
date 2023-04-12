@@ -12,6 +12,7 @@ public class Candidate {
     private String name;
     private String party;
     private Ballot ballot;
+    private ArrayList<Integer> ranks;
     private ArrayList<Ballot> votes;
 
     /**
@@ -41,6 +42,7 @@ public class Candidate {
         this.rank = rank;
         this.name = name;
         this.party = party;
+        this.votes = votes;
     }
 
     /**
@@ -53,6 +55,34 @@ public class Candidate {
         this.name = name;
         this.party = party;
         this.ballot = ballot;
+    }
+
+    /**
+     * Sets the Rank Array list object
+     * @return
+     */
+    public ArrayList<Integer> getRanks() {
+        return ranks;
+    }
+
+    /**
+     * Gets the ranks array list object
+     * @param ranks
+     */
+    public void setRanks(ArrayList<Integer> ranks) {
+        this.ranks = ranks;
+    }
+
+    /**
+     * Constructor for candidate with unidentifiable rank
+     * @param name
+     * @param party
+     * @param ranks
+     */
+    public Candidate(String name, String party, ArrayList<Integer> ranks) {
+        this.name = name;
+        this.party = party;
+        this.ranks = ranks;
     }
 
 

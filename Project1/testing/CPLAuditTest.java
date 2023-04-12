@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Date;
 
+import objects.Candidate;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +16,6 @@ import election.CPLAudit;
 import election.CPLElection;
 
 public class CPLAuditTest {
-
     private CPLAudit cplAudit;
     private CPLElection cplElection;
 
@@ -31,7 +32,7 @@ public class CPLAuditTest {
     }
 
     @Test
-    public void testProduceAuditCPL() throws IOException {
+    public void testProduceAuditIR() throws IOException {
         cplElection.setTotalVotes(1000);
         cplElection.setPartyVotes("PartyA", 500);
         cplElection.setPartySeats("PartyA", 10);

@@ -35,7 +35,26 @@ public class Ballot {
         this.votes = votes;
     }
 
+<<<<<<< HEAD
    
+=======
+    /**
+     * constructor for the ballot object
+     * @param votes
+     */
+    public Ballot(ArrayList<Integer> votes) {
+        this.votes = votes;
+    }
+
+    /**
+     * Constructor for Ballot for election where named Candidate prefrence is given
+     * @param preference ordered candidate prefrence
+     * @param size size of array
+     */
+    public Ballot(ArrayList<String> preference, int size) {
+        this.preference = preference;
+    }
+>>>>>>> 55748d119127ea3e9e6aeea0afc598f9eb4ec9bc
     /**
      * method to update the preference when candidate has been eliminated, transferring votes
      * to the next preferred candidate as well

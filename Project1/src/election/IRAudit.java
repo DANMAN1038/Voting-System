@@ -3,6 +3,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
+
 import objects.*;
 
 /**
@@ -24,20 +26,22 @@ public class IRAudit {
     //TODO Add number of ballots
     //TODO Audit file should show how the election progressed
     //TODO Audit file should show the order of removal of candidates in IR and what ballots were redistributed
-    public void produceAuditIT(IRElection elec) {
-        elec = this.election;
+    public void produceAuditIR(IRElection elec) {
         File audit = new File("Audit.txt");
         try {
+            Date today = new Date();
             ArrayList<Candidate> candidates = elec.getCandidates();
             FileWriter writer = new FileWriter("Audit.txt");
             writer.write("Election Conducted: Instant Runoff Election \r\n");
-            writer.write("Election Date: " + this.election.getDate() + "\r\n");
+            writer.write("Election Date: " + today + "\r\n");
             writer.write("Candidates Participated:\r\n");
             for (Candidate i : candidates) {
                 writer.write(i.getParty() + ": " + i.getName() + "\r\n");
             }
             writer.write("The Winner of The Election Was " + elec.getWinner().getName() + "!");
             System.out.println("Successfully created the Audit File");
+            writer.flush();
+            writer.close();
         }
         catch (IOException e) {
             System.err.println("Something went wrong");
@@ -65,6 +69,8 @@ public class IRAudit {
             }
             writer.write("The Winner of The Election Was " + elec.getWinner().getName() + "!");
             System.out.println("Successfully created the Media File");
+            writer.flush();
+            writer.close();
         }
         catch (IOException e) {
             System.err.println("Something went wrong");
