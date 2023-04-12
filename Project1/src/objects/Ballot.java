@@ -9,6 +9,16 @@ public class Ballot {
     private ArrayList<String> preference;
     private ArrayList<Integer> votes;
 
+     /**
+     * constructor for the ballot object
+     * @param votes
+     */
+    public Ballot(ArrayList<Integer> votes) {
+        this.votes = votes;
+    }
+    public Ballot(ArrayList<String> preference, int size) {
+        this.preference = preference;
+    }
     /**
      * Returns the amount of votes
      * @return
@@ -25,16 +35,7 @@ public class Ballot {
         this.votes = votes;
     }
 
-    /**
-     * constructor for the ballot object
-     * @param votes
-     */
-    public Ballot(ArrayList<Integer> votes) {
-        this.votes = votes;
-    }
-    public Ballot(ArrayList<String> preference, int size) {
-        this.preference = preference;
-    }
+   
     /**
      * method to update the preference when candidate has been eliminated, transferring votes
      * to the next preferred candidate as well
