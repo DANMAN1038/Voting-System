@@ -1,52 +1,41 @@
+import election.IRElection;
+
 import static org.junit.Assert.*;
-import org.junit.Test;
-import objects.*;
-import election.*;
-import objects.*;
+
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Arrays;
+
+import org.junit.Test;
+
+import objects.Ballot;
+import objects.Candidate;
 
 public class IRElectionTest {
-    private ArrayList<Integer> votes = new ArrayList<>();
-    private Date date = new Date();
-    private ArrayList<Candidate> candidates = new ArrayList<>();
-    private Candidate a = new Candidate("Dave", "R", votes);
-    private Candidate b = new Candidate("Jack", "L", votes);
-    private Candidate c = new Candidate("Jim", "D", votes);
-    private IRElection election = new IRElection(a, candidates);
 
     @Test
-    public void testElectionWinner() {
-        String expected = b.getName();
-        election.setWinner(b);
-        assertEquals("The Winner of the election is returned", expected, election.getWinner().getName());
-    }
-    @Test
-    public void testElectionCandidates() {
-        candidates.add(a);
-        candidates.add(b);
-        candidates.add(c);
-        assertEquals("The first candidate is returned", candidates.get(0), election.getCandidates().get(0));
-        assertEquals("The first candidate is returned", candidates.get(1), election.getCandidates().get(1));
-        assertEquals("The first candidate is returned", candidates.get(2), election.getCandidates().get(2));
-    }
-    @Test
-    public void DecideElectionWInner() {
-        candidates.add(a);
-        candidates.add(b);
-        candidates.add(c);
-        candidates.get(0).getRanks().add(5);
-        candidates.get(0).getRanks().add(3);
-        candidates.get(0).getRanks().add(2);
-        candidates.get(1).getRanks().add(2);
-        candidates.get(1).getRanks().add(3);
-        candidates.get(1).getRanks().add(1);
-        candidates.get(2).getRanks().add(0);
-        candidates.get(2).getRanks().add(0);
-        candidates.get(2).getRanks().add(1);
-        Candidate actual = election.decideWinner(candidates);
-        Candidate expected = candidates.get(0) ;
-        assertEquals("The winning candidate is returned", expected, actual);
+    public void testElectionIR() {
+        // Create some candidates
+        Candidate c1 = new Candidate("Alice", null, (ArrayList<Integer>) null);
+        Candidate c2 = new Candidate("Bob", null, (ArrayList<Integer>) null);
+        Candidate c3 = new Candidate("Charlie", null, (ArrayList<Integer>) null);
+        Candidate c4 = new Candidate("Dave", null, (ArrayList<Integer>) null);
+        ArrayList<Candidate> candidates = new ArrayList<>(Arrays.asList(c1, c2, c3, c4));
 
+        // Create some ballots
+        Ballot b1 = new Ballot(new ArrayList<>(Arrays.asList(1, 2, 3, 4)));
+        Ballot b2 = new Ballot(new ArrayList<>(Arrays.asList(2, 3, 1, 4)));
+        Ballot b3 = new Ballot(new ArrayList<>(Arrays.asList(3, 2, 1, 4)));
+        Ballot b4 = new Ballot(new ArrayList<>(Arrays.asList(4, 2, 3, 1)));
+        Ballot b5 = new Ballot(new ArrayList<>(Arrays.asList(2, 4, 3, 1)));
+        ArrayList<Ballot> ballots = new ArrayList<>(Arrays.asList(b1, b2, b3, b4, b5));
+
+        // Run the election
+        IRElection election = new IRElection(null, candidates);
+        ArrayList<Candidate> result = election.electionIR(ballots);
+        election.setWinner(result, 1);
+
+        // Check that the winner is correct
+        assertEquals(c2.getName(), election.getWinner().getName());
     }
+
 }
