@@ -1,11 +1,8 @@
 package objects;
 import java.util.ArrayList;
-/** Candidate class.
- * @author azamx016
- */
-
 /** Creates a candidate with specified information.
- *
+ * @author azamx016
+ * @author coll1396
  */
 public class Candidate {
     private Integer rank;
@@ -14,6 +11,7 @@ public class Candidate {
     private Ballot ballot;
     private ArrayList<Integer> ranks;
     private ArrayList<Ballot> votes;
+    private Integer totalVotes;
 
     /**
      * Method to return Ballot of Candidate
@@ -117,6 +115,38 @@ public class Candidate {
      * @return a integer for candidates rank.
      */
     public Integer getRank() {
+
         return this.rank;
+    }
+
+    /** Returns the total of all the votes the candidate has
+     *
+     * @return
+     */
+    public Integer getTotalVotes() {
+        return totalVotes;
+    }
+
+    /** Sets the total of all the votes the candidate has
+     *
+     * @param totalVotes the votes to be set as the total number of votes
+     */
+    public void setTotalVotes(Integer totalVotes) {
+        this.totalVotes = totalVotes;
+    }
+
+    /** Calculates the total votes given what round of voting we are on
+     *
+     * @param round refers to what round of voting or what prefrences of votes are we counting for the candidates
+     * @return
+     */
+    public int calcTotalVotes(int round) {
+        int index = round - 1;
+        int sum = 0;
+        for (int i = 0; i <= index && i < ranks.size(); i++) {
+            sum += ranks.get(i);
+        }
+        this.totalVotes = sum;
+        return sum;
     }
 }
