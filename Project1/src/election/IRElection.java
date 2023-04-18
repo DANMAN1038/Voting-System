@@ -1,18 +1,14 @@
 package election;
-import java.awt.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import objects.*;
 
-/**
+/**The IRElection class to be used to produce where the Instant Runoff Election is executed
  * @author coll1396
  *
- * The IRElection class to be used to produce
- * Audit and Media File
  */
 public class IRElection extends IElection {
     private Candidate winner;
@@ -22,7 +18,7 @@ public class IRElection extends IElection {
     /**
      * Constructor for IRElection class
      * @param winner The winner of the election
-     * @param candidates All candidates participating int the election
+     * @param candidates All candidates participating in the election
      */
     public IRElection(Candidate winner, ArrayList<Candidate> candidates) {
         this.winner = winner;
@@ -34,27 +30,25 @@ public class IRElection extends IElection {
      * @return The Candidate that won the Election according to the Instant Runoff rules
      */
     public ArrayList<Candidate> electionIR(ArrayList<Ballot> ballots) {
+        //creates an arraylist where its to add all ballots for later parsing
         ArrayList<Integer> votes = new ArrayList<>();
         ArrayList<Candidate> allCandidates = this.candidates;
-
-
-      //  int indexer = -1;
+        //these for loops go through each candidate and calculates the amount of votes they got for every rank
         for (int x = 1; x < allCandidates.size() + 1; x++) {
-           // indexer ++;
             for (int i = 0; i < allCandidates.size(); i++) {
                 int amount = voteCounter(ballots, i, x);
+                //adds all the candidate vote's rankings into the arraylist
                 votes.add(amount);
-
             }
-
         }
+        //The next two lines of code creates the arraylist schema for the candidate ballots and set them toward their candidates
         ArrayList<ArrayList<Integer>> rankings = createCandidateBallots(votes);
         setVotes(allCandidates, rankings);
         return allCandidates;
     }
 
     /**
-     * Array list to set the votes for all the candidate object
+     * Array list to set the votes for all the candidate objects
      * @param candidates all the candidates
      * @param votes the votes being set
      */
@@ -76,7 +70,7 @@ public class IRElection extends IElection {
         for (int i = 0; i < 4; i++) {
             arrayListOfArrayLists.add(new ArrayList<Integer>());
         }
-        int stepSize = 3;
+        int stepSize = 4;
         int[] currentIndexes = new int[4];
         Arrays.fill(currentIndexes, -1);
         for (int i = 0; i < numbers.size(); i++) {
@@ -114,56 +108,51 @@ public class IRElection extends IElection {
     }
 
     /**
-     * Method to decide the winner of the election
-     * @param candidates
+     * Method to decide the winner of the election given all candidates with their assigned votes
+     * @param candidates all candidates participating in the election
+     * @param round the round of voting which the IR election is one, starts at 1
      * @return
      */
-    public Candidate decideWinner(ArrayList<Candidate> candidates) {
-        ArrayList<Integer> firstIndices = new ArrayList<Integer>();
-        for (Candidate c : candidates) {
-            ArrayList<Integer> list = c.getRanks();
-            int first = list.get(0);
-            firstIndices.add(first);
-        }
-
-        while (!candidates.isEmpty()) {
-            int max = Collections.max(firstIndices);
-            int index = firstIndices.indexOf(max);
-            Candidate candidate = candidates.get(index);
-            ArrayList<Integer> list = candidate.getRanks();
-            boolean isMax = true;
-            for (int i = 0; i < firstIndices.size(); i++) {
-                if (i == index) {
-                    continue;
-                }
-                int combined = list.get(0) + candidates.get(i).getRanks().get(0);
-                if (combined > max) {
-                    isMax = false;
-                    break;
+    public boolean setWinner(ArrayList<Candidate> candidates, int round) {
+        //Declaring this variable to be used to keep track of the popular Vote a candidate has to surpass to win the Election
+        int popularVote = 0;
+        //The method is recursive and only ends if it sets a winner and thus executes the block in this if statement to return true
+        if (winner != null) {
+            return true;
+            //statement to check if only one candidate remains after running meaning it's the last candidate left and the election winner
+        } else if (candidates.size() == 1) {
+            setWinner(candidates.get(0));
+        } else {
+            //for statement to calculate the popular vote in the election candidates have to have over 50% in
+            for (Candidate c : candidates) {
+                popularVote += c.calcTotalVotes(round);
+            }
+            //for statement to check if any candidate won the popular vote, to have them set as the winner
+            for (Candidate c : candidates) {
+                if (c.getTotalVotes() > (popularVote - c.getTotalVotes())) {
+                    setWinner(c);
                 }
             }
-            if (isMax) {
-                return candidate;
-            } else {
-                candidates.remove(index);
-                firstIndices.remove(index);
+            //Code after for loop that runs if no winner is set and so deletes the candidate with the lowest vote total and recursively goes to the next round of voting
+            Candidate deleted = new Candidate(null, null, (ArrayList<Integer>) null);
+            for (Candidate c : candidates) {
+                if (c.getTotalVotes() == deleted.getTotalVotes() && c.getRanks().get(round-1) < deleted.getRanks().get(round-1)) {
+                    deleted = c;
+                    popularVote = c.getTotalVotes();
+                }
+                else if (c.getTotalVotes() < popularVote) {
+                    deleted = c;
+                    popularVote = c.getTotalVotes();
+                }
             }
-            if (candidates.isEmpty()) {
-                break;
-            }
-            int min = Collections.min(firstIndices);
-            int minIndex = firstIndices.indexOf(min);
-            Candidate minCandidate = candidates.get(minIndex);
-            candidates.remove(minIndex);
-            firstIndices.remove(minIndex);
-            int secondMax = Collections.max(firstIndices);
-            int secondIndex = firstIndices.indexOf(secondMax);
-            Candidate secondCandidate = candidates.get(secondIndex);
-            int combined = minCandidate.getRanks().get(0) + secondCandidate.getRanks().get(0);
-            candidates.add(minIndex, minCandidate);
-            firstIndices.add(minIndex, combined);
+            // to remove the candidate that had the lowest votes
+            candidates.remove(deleted);
+            //to increment the vote preferences we will be looking for
+            round++;
+            //calling the method to run again until a winner is set
+            setWinner(candidates, round);
         }
-        return null;
+        return true;
     }
 
     /**
