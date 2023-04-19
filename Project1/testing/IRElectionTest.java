@@ -5,37 +5,65 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import objects.Ballot;
 import objects.Candidate;
 
 public class IRElectionTest {
+    private ArrayList<Candidate> candidates;
+    private IRElection election;
+
+    @Before
+    public void setUp() throws Exception {
+        // Create the ballots for the candidates
+        ArrayList<Integer> b1 = new ArrayList<Integer>();
+        b1.add(3);
+        b1.add(2);
+        b1.add(2);
+        ArrayList<Integer> b2 = new ArrayList<Integer>();
+        b2.add(3);
+        b2.add(1);
+        b2.add(2);
+        ArrayList<Integer> b3 = new ArrayList<Integer>();
+        b3.add(1);
+        b3.add(2);
+        b3.add(4);
+
+        // Create some candidates and with the predetermined ballots
+        Candidate c1 = new Candidate("Alice", null, (ArrayList<Integer>) b1);
+        Candidate c2 = new Candidate("Bob", null, (ArrayList<Integer>) b2);
+        Candidate c3 = new Candidate("Charlie", null, (ArrayList<Integer>) b3);
+        candidates = new ArrayList<Candidate>();
+        candidates.add(c1);
+        candidates.add(c2);
+        candidates.add(c3);
+
+    }
 
     @Test
     public void testElectionIR() {
-        // Create some candidates
-        Candidate c1 = new Candidate("Alice", null, (ArrayList<Integer>) null);
-        Candidate c2 = new Candidate("Bob", null, (ArrayList<Integer>) null);
-        Candidate c3 = new Candidate("Charlie", null, (ArrayList<Integer>) null);
-        Candidate c4 = new Candidate("Dave", null, (ArrayList<Integer>) null);
-        ArrayList<Candidate> candidates = new ArrayList<>(Arrays.asList(c1, c2, c3, c4));
 
-        // Create some ballots
-        Ballot b1 = new Ballot(new ArrayList<>(Arrays.asList(1, 2, 3, 4)));
-        Ballot b2 = new Ballot(new ArrayList<>(Arrays.asList(2, 3, 1, 4)));
-        Ballot b3 = new Ballot(new ArrayList<>(Arrays.asList(3, 2, 1, 4)));
-        Ballot b4 = new Ballot(new ArrayList<>(Arrays.asList(4, 2, 3, 1)));
-        Ballot b5 = new Ballot(new ArrayList<>(Arrays.asList(2, 4, 3, 1)));
-        ArrayList<Ballot> ballots = new ArrayList<>(Arrays.asList(b1, b2, b3, b4, b5));
-
-        // Run the election
-        IRElection election = new IRElection(null, candidates);
-        ArrayList<Candidate> result = election.electionIR(ballots);
-        election.setWinner(result, 1);
+        // Run the election, setting the winner with the candidates and their votes
+        election = new IRElection(null, candidates);
+        election.setWinner(candidates, 1);
 
         // Check that the winner is correct
-        assertEquals(c2.getName(), election.getWinner().getName());
+        assertEquals("Alice", election.getWinner().getName());
+    }
+
+    @Test
+    public void testTieBreaker() {
+        Candidate a = new Candidate("Jill", null, (ArrayList<Integer>) null);
+        Candidate b = new Candidate("Jack", null, (ArrayList<Integer>) null);
+        candidates.add(a);
+        candidates.add(b);
+        election = new IRElection(null, candidates);
+        Candidate c = election.winnnerTieDecider(a, b);
+        String winnerName = c.getName();
+        assertTrue(winnerName.equals("Jill") || winnerName.equals("Jack"));
+
     }
 
 }

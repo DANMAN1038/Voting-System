@@ -7,10 +7,9 @@ import java.util.Date;
 
 import objects.*;
 
-/**
+/**The IRAudit Class which deals with creating the Media and Audit Files for IR Elections
  * @author coll1396
  *
- * The IRAudit Class which deals with creating the Media and Audit Files for IR Elections
  */
 public class IRAudit {
     private IRElection election;
@@ -18,14 +17,8 @@ public class IRAudit {
 
     /**
      * Method to create the Audit file of an IR Election
-     * @param elec
+     * @param elec the election file being utilized to mak the audit file
      */
-    //SAME AS produceMediaIR, TO BE REVISED
-    //TODO Add how many votes a candidate had
-    //TODO Add number of Candidates
-    //TODO Add number of ballots
-    //TODO Audit file should show how the election progressed
-    //TODO Audit file should show the order of removal of candidates in IR and what ballots were redistributed
     public void produceAuditIR(IRElection elec) {
         File audit = new File("Audit.txt");
         try {
@@ -36,9 +29,11 @@ public class IRAudit {
             writer.write("Election Date: " + today + "\r\n");
             writer.write("Candidates Participated:\r\n");
             for (Candidate i : candidates) {
-                writer.write(i.getParty() + ": " + i.getName() + "\r\n");
+                writer.write("\r\n" + i.getParty() + ": " + i.getName() + " getting the following votes in each round: \r\n");
+                for (Integer n: i.getRanks())
+                    writer.write(n + " votes |");
             }
-            writer.write("The Winner of The Election Was " + elec.getWinner().getName() + "!");
+            writer.write("\r\nThe Winner of The Election Was " + elec.getWinner().getName() + "!");
             System.out.println("Successfully created the Audit File");
             writer.flush();
             writer.close();
@@ -51,19 +46,17 @@ public class IRAudit {
 
     /**
      * Method to produce the Media file for an IR Election
-     * @param elec
+     * @param elec the election file being utilized to mak the media file
      */
-    //TODO show winner, party and total votes everyone got
-    //SAME AS produceAuditIT, TO BE REVISED
     public void produceMediaIR(IRElection elec) {
-        elec = this.election;
-        File audit = new File("Audit.txt");
+        File audit = new File("Media.txt");
         try {
+            Date today = new Date();
             ArrayList<Candidate> candidates = elec.getCandidates();
             FileWriter writer = new FileWriter("Media.txt");
             writer.write("Election Conducted: Instant Runoff Election \r\n");
-            writer.write("Election Date: " + this.election.getDate() + "\r\n");
-            writer.write("Candidates Participated:");
+            writer.write("Election Date: " + today + "\r\n");
+            writer.write("Candidates Participated:\r\n");
             for (Candidate i : candidates) {
                 writer.write(i.getParty() + ": " + i.getName() + "\r\n");
             }

@@ -1,8 +1,6 @@
 package main;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.Map;
 import java.util.Scanner;
 import java.io.IOException;
@@ -12,13 +10,13 @@ import java.util.List;
 import election.*;
 import objects.*;
 
-/**
+/**The Main class of the program where the election is conducted and the subsequent methods to induce it is run
+ *
  * @author moha1113
  * @author coll1396
  * @author syed0053
  * @author azamx016
  *
- * The Main class of the program where the election is conducted and the subsequent methods to induce it is run
  */
 public class Voting {
     private static Integer totalC;
@@ -42,9 +40,10 @@ public class Voting {
     /**
      * Method for setting the type of election being conducted
      *
-     * @param electType
+     * @param electType the type of election being done
      */
     public static void setElectionType(String electType) {
+
         electionType = electType;
     }
 
@@ -67,7 +66,7 @@ public class Voting {
     /**
      * Method to check the election of a file to make sure its a CSV file and that it exists
      *
-     * @param type
+     * @param type the type of election enacted entered by the user
      * @return
      */
     public static boolean electionTypeChecker(String type) {
@@ -191,9 +190,11 @@ public class Voting {
                         index++;
                     }
                 }
+                // if statement that enacts everything under line 4 to be recorded as the Ballot
                 if (lineNumber > 4) {
                     ArrayList<Integer> rankings = new ArrayList<>();
                     String values[] = line.split(" ", totalC);
+                    //loop to record votes and add them to ballot object
                     for (int i = 0; i < values.length; i++) {
                         if (values[i].equals("")) {
                             rankings.add(0);
@@ -268,43 +269,52 @@ public class Voting {
      * @param args
      */
     public static void main(String[] args) {
+        //calls the userprompter to ask user for input on election file and type
         userPrompter();
         candidateParser();
+        //calls electiontype variable and runs either IR or CPL method depending on input
         switch (electionType) {
             case "IR":
-                ArrayList<Candidate> cands = candidates;
-                IRElection election = new IRElection(null, cands);
+                //creates roster list to be used to store all candidates
+                ArrayList<Candidate> roster = new ArrayList<Candidate>();
+                roster = (ArrayList)candidates.clone();
+                //creates IRElection object to run IR election
+                IRElection election = new IRElection(null, candidates);
+                //runs the electionIR method with the ballots as the parameter
                 ArrayList<Candidate> c = election.electionIR(ballots);
-            cands = c;
-            Candidate w = election.decideWinner(cands);
-            election.setWinner(w);
-            election.setCandidates(candidates);
-            election.displayWinner();
-            IRAudit auditIR = new IRAudit();
-                auditIR.produceAuditIR(election);
 
-                    break;
-                    case "CPL":
-                        CPLElection runCPL = new CPLElection(parties);
-                        runCPL.readFile(getFilePath());
-                        runCPL.firstSeatWaveAllocation();
+                //sets the Winner of the Candidates with votes returned by the prior method
+                election.setWinner(candidates, 1);
+                //sets the candidates in election to the full roster
+                election.setCandidates(roster);
+                //displays the winner to the terminal
+                election.displayWinner();
+                //creates the object to generate the Audit and Media file
+                IRAudit auditMediaIR = new IRAudit();
+                auditMediaIR.produceAuditIR(election);
+                auditMediaIR.produceMediaIR(election);
 
-                        String partyWithMostSeats = "";
-                        Integer maxSeats = 0;
-                        for (Map.Entry<String, Integer> entry : runCPL.getPartySeats().entrySet()) {//find party with most seats
-                            if (entry.getValue() > maxSeats) {
-                                maxSeats = entry.getValue();
-                                partyWithMostSeats = entry.getKey();
-                            }
-                        }
-                        runCPL.setWinner(partyWithMostSeats);
-                        runCPL.displayWinner();
+                break;
+            case "CPL":
+                CPLElection runCPL = new CPLElection(parties);
+                runCPL.readFile(getFilePath());
+                runCPL.firstSeatWaveAllocation();
 
-                        CPLAudit audit = new CPLAudit();
-                        audit.produceAuditCPL(runCPL);
-                        audit.produceMediaCPL(runCPL);
-                        break;
+                String partyWithMostSeats = "";
+                Integer maxSeats = 0;
+                for (Map.Entry<String, Integer> entry : runCPL.getPartySeats().entrySet()) {//find party with most seats
+                    if (entry.getValue() > maxSeats) {
+                        maxSeats = entry.getValue();
+                        partyWithMostSeats = entry.getKey();
+                    }
+                }
+                runCPL.setWinner(partyWithMostSeats);
+                runCPL.displayWinner();
+
+                CPLAudit audit = new CPLAudit();
+                audit.produceAuditCPL(runCPL);
+                audit.produceMediaCPL(runCPL);
+                break;
         }
     }
 }
-

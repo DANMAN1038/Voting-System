@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import objects.*;
+import java.util.Random;
 
 /**The IRElection class to be used to produce where the Instant Runoff Election is executed
  * @author coll1396
@@ -174,11 +175,13 @@ public class IRElection extends IElection {
      */
     @Override
     public Candidate winnnerTieDecider(Candidate a, Candidate b) {
-        Candidate[] tieBreaker= new Candidate[1];
-        tieBreaker[0] = a;
-        tieBreaker[1] = b;
-        Candidate c = tieBreaker[(int)Math.random() * tieBreaker.length];
-        return c;
+        Random rand = new Random();
+        int randomIndex = rand.nextInt(2); // Generate a random integer between 0 and 1 (inclusive)
+        if (randomIndex == 0) {
+            return a;
+        } else {
+            return b;
+        }
     }
 
     /**

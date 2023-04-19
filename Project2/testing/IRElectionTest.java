@@ -1,52 +1,69 @@
+import election.IRElection;
+
 import static org.junit.Assert.*;
-import org.junit.Test;
-import objects.*;
-import election.*;
-import objects.*;
+
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Arrays;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import objects.Ballot;
+import objects.Candidate;
 
 public class IRElectionTest {
-    private ArrayList<Integer> votes = new ArrayList<>();
-    private Date date = new Date();
-    private ArrayList<Candidate> candidates = new ArrayList<>();
-    private Candidate a = new Candidate("Dave", "R", votes);
-    private Candidate b = new Candidate("Jack", "L", votes);
-    private Candidate c = new Candidate("Jim", "D", votes);
-    private IRElection election = new IRElection(a, candidates);
+    private ArrayList<Candidate> candidates;
+    private IRElection election;
 
-    @Test
-    public void testElectionWinner() {
-        String expected = b.getName();
-        election.setWinner(b);
-        assertEquals("The Winner of the election is returned", expected, election.getWinner().getName());
-    }
-    @Test
-    public void testElectionCandidates() {
-        candidates.add(a);
-        candidates.add(b);
-        candidates.add(c);
-        assertEquals("The first candidate is returned", candidates.get(0), election.getCandidates().get(0));
-        assertEquals("The first candidate is returned", candidates.get(1), election.getCandidates().get(1));
-        assertEquals("The first candidate is returned", candidates.get(2), election.getCandidates().get(2));
-    }
-    @Test
-    public void DecideElectionWInner() {
-        candidates.add(a);
-        candidates.add(b);
-        candidates.add(c);
-        candidates.get(0).getRanks().add(5);
-        candidates.get(0).getRanks().add(3);
-        candidates.get(0).getRanks().add(2);
-        candidates.get(1).getRanks().add(2);
-        candidates.get(1).getRanks().add(3);
-        candidates.get(1).getRanks().add(1);
-        candidates.get(2).getRanks().add(0);
-        candidates.get(2).getRanks().add(0);
-        candidates.get(2).getRanks().add(1);
-        Candidate actual = election.decideWinner(candidates);
-        Candidate expected = candidates.get(0) ;
-        assertEquals("The winning candidate is returned", expected, actual);
+    @Before
+    public void setUp() throws Exception {
+        // Create the ballots for the candidates
+        ArrayList<Integer> b1 = new ArrayList<Integer>();
+        b1.add(3);
+        b1.add(2);
+        b1.add(2);
+        ArrayList<Integer> b2 = new ArrayList<Integer>();
+        b2.add(3);
+        b2.add(1);
+        b2.add(2);
+        ArrayList<Integer> b3 = new ArrayList<Integer>();
+        b3.add(1);
+        b3.add(2);
+        b3.add(4);
+
+        // Create some candidates and with the predetermined ballots
+        Candidate c1 = new Candidate("Alice", null, (ArrayList<Integer>) b1);
+        Candidate c2 = new Candidate("Bob", null, (ArrayList<Integer>) b2);
+        Candidate c3 = new Candidate("Charlie", null, (ArrayList<Integer>) b3);
+        candidates = new ArrayList<Candidate>();
+        candidates.add(c1);
+        candidates.add(c2);
+        candidates.add(c3);
 
     }
+
+    @Test
+    public void testElectionIR() {
+
+        // Run the election, setting the winner with the candidates and their votes
+        election = new IRElection(null, candidates);
+        election.setWinner(candidates, 1);
+
+        // Check that the winner is correct
+        assertEquals("Alice", election.getWinner().getName());
+    }
+
+    @Test
+    public void testTieBreaker() {
+        Candidate a = new Candidate("Jill", null, (ArrayList<Integer>) null);
+        Candidate b = new Candidate("Jack", null, (ArrayList<Integer>) null);
+        candidates.add(a);
+        candidates.add(b);
+        election = new IRElection(null, candidates);
+        Candidate c = election.winnnerTieDecider(a, b);
+        String winnerName = c.getName();
+        assertTrue(winnerName.equals("Jill") || winnerName.equals("Jack"));
+
+    }
+
 }
