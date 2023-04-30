@@ -68,6 +68,14 @@ public class CPLElection extends IElection {
     }
 
     /**
+     * Method to return party remainders sorted
+     * @param partyRemaindersSorted
+     */
+    public void setPartyRemaindersSorted(Map<String, Integer> partyRemaindersSorted) {
+        this.partyRemaindersSorted = partyRemaindersSorted;
+    }
+
+    /**
      * Returns the winner of the election
      * @return winner of the Election as a string
      */
@@ -221,6 +229,7 @@ public class CPLElection extends IElection {
         if(numSeats > 0){
             compareRemainders(partyRemaindersSorted);
         }
+        setPartyRemaindersSorted(partyRemaindersSorted);
     }
 
     /**

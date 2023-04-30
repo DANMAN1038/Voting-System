@@ -69,24 +69,24 @@ public class CPLElectionTest {
         //Map<String, Integer> test = new LinkedHashMap<>();
         //test  = runCPL.getPartyRemainders();
         Map<String, Integer> test = runCPL.getPartyRemainders();
-        assertEquals("The party and its votes returned", test.toString(), "{Democratic=8, Republican=15, New Wave=0, Reform=16, Green=8, Independent=24}");
+        assertEquals("The party and its votes returned", test.toString(), "{Independent=24, Reform=16, Republican=15, Democratic=8, Green=8, New Wave=0}");
     }
 
     @Test
     public void testQuota() {
         int quota = runCPL.getQuota();
-        assertEquals("The number of seats is returned", quota, 32);
+        assertEquals("Test the Quota", quota, 32);
     }
 
     @Test
     public void testTotalVotes() {
         int votes = runCPL.getTotalVotes();
-        assertEquals("The number of seats is returned", votes, 647);
+        assertEquals("The number of total votes is returned", votes, 647);
     }
 
     @Test
     public void testWinnerTieDecider() {
         int number = runCPL.winnerTieDecider();
-        assertEquals("The number of seats is returned", number, 1);
+        assertTrue("Random number is returned", number == 1 || number == 2);
     }
 }
