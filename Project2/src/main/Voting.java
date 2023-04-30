@@ -512,7 +512,7 @@ public class Voting {
                 IRAudit auditMediaIR = new IRAudit();
                 auditMediaIR.produceAuditIR(election);
                 auditMediaIR.produceMediaIR(election);
-                if (invalidBallots.size() == 0) {
+                if (invalidBallots.size() != 0) {
                     auditMediaIR.writeBallotsToFile(election, invalidBallots);
                 }
                 election.displayTable();
