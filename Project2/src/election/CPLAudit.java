@@ -29,8 +29,8 @@ public class CPLAudit extends CPLElection{
             Date today = new Date();
             writer.write("Election Date: " + today + "\r\n");
             writer.write("The total votes in this election was: " + elec.getTotalVotes() + "\r\n");
-            writer.write("Party and Seat totals: " + elec.getPartyVotes() + "\r\n");
-            writer.write("Party and Vote totals: " + elec.getPartySeats() + "\r\n");
+            writer.write("Party and Seat totals: " + elec.getPartySeats() + "\r\n");
+            writer.write("Party and Vote totals: " + elec.getPartyVotes() + "\r\n");
             writer.write("The Winner of The Election Was " + elec.getWinner() + "!");
             System.out.println("Successfully created the Audit File");
             writer.flush();
