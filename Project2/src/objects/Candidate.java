@@ -91,6 +91,14 @@ public class Candidate {
     }
 
     /**
+     * Simple constructor for candidate for testing purposes
+     * @param name
+     */
+    public Candidate(String name) {
+        this.name = name;
+    }
+
+    /**
      * Sets the Rank Array list object
      * @return
      */

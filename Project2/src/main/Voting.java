@@ -121,7 +121,6 @@ public class Voting {
     public static void userPrompter() {
         ArrayList<File> files = chooseFiles();
         Scanner userInput = new Scanner(System.in);
-       // System.out.println("Enter the Election file name with extension here: ");
       //  String file = userInput.nextLine();
         if (!checkFileType(files)) {
             System.err.println("At least one of the files you provided is not a CSV file or does not exist in the given directory. Please" +
@@ -348,7 +347,6 @@ public class Voting {
             String line = s.nextLine().replaceAll(",", " ");;
             Scanner sc = new Scanner(line);
             String type = sc.next();
-            System.out.println(type);
             if (electionTypeChecker(type)) {
                 setElectionType(type);
             }
@@ -530,9 +528,6 @@ public class Voting {
                 rosterPO = (ArrayList)candidates.clone();
                 //creates IRElection object to run IR election
                 POElection electionPO = new POElection(null, candidates, elecDate);
-                for (Candidate candidate : candidates) {
-                       // System.out.println(candidate.getName());
-                    }
                 //Run the PO election algorithm with the Ballots
                 ArrayList<Candidate> cPO = electionPO.electionPO(ballots);
                 //Get the Winner

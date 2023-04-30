@@ -126,7 +126,6 @@ public class POElection extends IElection {
             if (candidate.getVotesPO() > maxVotes) {
                 maxVotes = candidate.getVotesPO();
                 winner = candidate;
-                System.out.println(candidate.getName());
             }
         }
 
@@ -137,13 +136,14 @@ public class POElection extends IElection {
                 tiedCandidates.add(candidate);
             }
         }
-
-        if (tiedCandidates.size() == 1) {
+        if (tiedCandidates.size() <= 1) {
             // Only one candidate has the maximum number of votes, return the winner
+            System.out.println("is the winner");
             this.winner = winner;
             return winner;
         } else {
             // There is a tie between candidates, use tiebreaker method
+
             winner = tiebreaker(tiedCandidates);
             this.winner = winner;
             return winner;
