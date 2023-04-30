@@ -16,3 +16,4 @@ The newly created files should be viewable in the same directory as the SRS, SDD
 * Both Audit and Media files will be generated on the home direcotry of the project
 * Many class object have extra constructors because we wanted to be flexible with what information we would recieve to parse for our Election CSV files
 * The Voting.java class is our "Main" class with our main method to run the program
+* For the CPLElection test algorithm, you must manually changed the directory the _electionFile_ variable is set to the path where the _CPL_Election.csv_ file is located on your local system
