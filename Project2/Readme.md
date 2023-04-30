@@ -3,10 +3,12 @@
 
 ## How to run:
 
-Click run button in IDE (typically a play button already located on screen, or through the Run tab at the top)
-Enter file location, (example: /home/syed0053/CSCI5801/repo-Team20/Project1/misc/CPL_Election.csv)
-If the election is an Instant Runoff election, enter , otherwise enter for Closed Party Listing
+Click run button in IDE (typically a play button already located on screen, or through the Run tab at the top), afterwards a file selector GUI will show up, navigate to the election file(s) you want to run in the testing/Election_File directory and select them. 
+
+The election files must be of the same type. Afterwards enter the date in the format _dd/mm/yyyy_ and the election will commence.
+
 Election will run and automatically process the associated algorithm as well as creating the Audit and Media file
+
 The newly created files should be viewable in the same directory as the SRS, SDD, etc.
 
 
