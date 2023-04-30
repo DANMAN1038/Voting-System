@@ -27,9 +27,9 @@ public class CPLElectionTest {
 
     @Before
     public void setUp() {
-        //to run please change the directory to the directory of where you CPL_Election.csv file is located in the misc folder the project
-        //electionFile = new File("C:/Users/omavi/OneDrive/Documents/GitHub/repo-Team20/Project2/misc/CPL_Election.csv");
-        electionFile = new File("/home/syed0053/CSCI5801/repo-Team20/Project2/misc/CPL_Election.csv");
+        //TODO to run please change the directory to the directory of where you CPL_Election.csv file is located in the misc folder the project
+        electionFile = new File("C:/Users/omavi/OneDrive/Documents/GitHub/repo-Team20/Project2/testing/Election_Files/CPL_Election.csv");
+      //  electionFile = new File("/home/syed0053/CSCI5801/repo-Team20/Project2/misc/CPL_Election.csv");
         ArrayList<File> files = new ArrayList<File>();
         files.add(electionFile);
         parties.add(party3);
@@ -53,15 +53,15 @@ public class CPLElectionTest {
         // Map<String, Integer> test = new LinkedHashMap<>();
         // test  = runCPL.getPartyRemainders();
         Map<String, Integer> test = runCPL.getPartyVotes();
-        assertEquals("The party and its votes returned", test, "{Democratic=72, Republican=143, New Wave=0, Reform=144, Green=72, Independent=216}");
+        assertEquals("The party and its votes returned", test.toString(), "{Democratic=72, Republican=143, New Wave=0, Reform=144, Green=72, Independent=216}");
     }
 
     @Test
     public void testPartySeats() {
-        Map<String, Integer> test = new LinkedHashMap<>();
-        test  = runCPL.getPartyRemainders();
-        //Map<String, Integer> test = runCPL.getPartySeats();
-        assertEquals("The party and its votes returned", test, "{Democratic=2, Republican=4, New Wave=0, Reform=4, Green=2, Independent=6}");
+       // Map<String, Integer> test = new LinkedHashMap<>();
+      // test  = runCPL.getPartyRemainders();
+        Map<String, Integer> test = runCPL.getPartySeats();
+        assertEquals("The party and its votes returned", test.toString(), "{Democratic=2, Republican=4, New Wave=0, Reform=4, Green=2, Independent=6}");
     }
 
     @Test
@@ -69,7 +69,7 @@ public class CPLElectionTest {
         //Map<String, Integer> test = new LinkedHashMap<>();
         //test  = runCPL.getPartyRemainders();
         Map<String, Integer> test = runCPL.getPartyRemainders();
-        assertEquals("The party and its votes returned", test, "{Democratic=8, Republican=15, New Wave=0, Reform=16, Green=8, Independent=24}");
+        assertEquals("The party and its votes returned", test.toString(), "{Democratic=8, Republican=15, New Wave=0, Reform=16, Green=8, Independent=24}");
     }
 
     @Test
