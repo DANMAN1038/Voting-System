@@ -137,6 +137,7 @@ public class IRElection extends IElection {
             for (Candidate c : candidates) {
                 if (c.getTotalVotes() > (popularVote - c.getTotalVotes())) {
                     setWinner(c);
+                    return true;
                 }
             }
             //Code after for loop that runs if no winner is set and so deletes the candidate with the lowest vote total and recursively goes to the next round of voting
