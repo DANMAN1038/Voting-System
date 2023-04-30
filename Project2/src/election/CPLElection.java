@@ -310,6 +310,14 @@ public class CPLElection extends IElection {
         partyVotes.put(party, votes);
     }
 
+    public void setPartyVotes(Map<String, Integer> partyVotes) {
+        this.partyVotes = partyVotes;
+    }
+
+    public void setPartySeats(Map<String, Integer> partySeats) {
+        this.partySeats = partySeats;
+    }
+
     public void setPartySeats(String party, int seats) {
         partySeats.put(party, seats);
     }

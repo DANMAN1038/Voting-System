@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import objects.Candidate;
 import org.junit.After;
@@ -33,6 +35,10 @@ public class CPLAuditTest {
 
     @Test
     public void testProduceAuditIR() throws IOException {
+        Map<String, Integer> pVotes = new LinkedHashMap<>();
+        Map<String, Integer> pSeats = new LinkedHashMap<>();
+        cplElection.setPartySeats(pSeats);
+        cplElection.setPartyVotes(pVotes);
         cplElection.setTotalVotes(1000);
         cplElection.setPartyVotes("PartyA", 500);
         cplElection.setPartySeats("PartyA", 10);
@@ -54,6 +60,10 @@ public class CPLAuditTest {
 
     @Test
     public void testProduceMediaCPL() throws IOException {
+        Map<String, Integer> pVotes = new LinkedHashMap<>();
+        Map<String, Integer> pSeats = new LinkedHashMap<>();
+        cplElection.setPartySeats(pSeats);
+        cplElection.setPartyVotes(pVotes);
         cplElection.setPartySeats("PartyA", 10);
         cplElection.setWinner("PartyA");
         cplAudit.produceMediaCPL(cplElection);
