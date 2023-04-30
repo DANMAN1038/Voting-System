@@ -134,6 +134,21 @@ public class Voting {
     }
 
     /**
+     * Method to return all Candidate in current Election
+     * @return
+     */
+    public static ArrayList<Candidate> getCandidates() {
+        return candidates;
+    }
+
+    /**
+     * Method to set all Candidate in current Election
+     */
+    public static void setCandidates(ArrayList<Candidate> candidates) {
+        Voting.candidates = candidates;
+    }
+
+    /**
      * Method to create the full party name from the Abbreviated name given
      *
      * @param partyArg the abbreviated name of the party [i.e. (D)]
