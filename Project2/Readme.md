@@ -4,7 +4,7 @@ Click run button in IDE (typically a play button already located on screen, or t
 
 The election files must be of the same type. Afterwards enter the date in the format _dd/mm/yyyy_ and the election will commence.
 
-Election will run and automatically process the associated algorithm as well as creating the Audit and Media file
+Election will run and automatically process the associated algorithm as well as creating the Audit and Media file and invalid ballots file for IR
 
 The newly created files should be viewable in the same directory as the SRS, SDD, etc.
 
