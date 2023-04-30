@@ -15,7 +15,8 @@ import javax.swing.SwingConstants;
 import objects.*;
 
 /**The IRElection class to be used to produce where the Instant Runoff Election is executed
- * @author
+ * @author coll1396
+ * @author moha1113
  *
  */
 public class POElection extends IElection {
@@ -254,7 +255,10 @@ public class POElection extends IElection {
         return this.winner;
     }
 
-
+    /**
+     *
+     * @param candidates
+     */
     public void showResults(ArrayList<Candidate> candidates) {
         // Calculate total number of votes
         double totalVotes = 0;
