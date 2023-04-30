@@ -7,6 +7,9 @@ import java.util.Map;
 
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import election.*;
 import main.*;
@@ -14,21 +17,26 @@ import objects.Party;
 
 public class CPLElectionTest {
 
-    Voting obj = new Voting();
+    private Voting obj = new Voting();
     private List<Party> parties = new ArrayList<>();
-    Party party3 = new Party(0, "Democrat");
-    Party party2 = new Party(0, "Republican");
-    File electionFile;
-    CPLElection runCPL;
+    private Party party3 = new Party(0, "Democrat");
+    private Party party2 = new Party(0, "Republican");
+    private File electionFile;
+    private CPLElection runCPL;
 
-    @BeforeEach
+    @Before
     public void setUp() {
-        electionFile = new File("home/syed0053/CSCI5801/repo-Team20/Project1/misc/CPL_Election.csv");
+        //to run please change the directory to the directory of where you CPL_Election.csv file is located in the misc folder the project
+        electionFile = new File("C:/Users/omavi/OneDrive/Documents/GitHub/repo-Team20/Project2/misc/CPL_Election.csv");
+        ArrayList<File> files = new ArrayList<File>();
+        files.add(electionFile);
         parties.add(party3);
         parties.add(party2);
-        obj.setFilePath(electionFile);
+        //Changed for running the Voting; changed to accept arraylist of Files
+        obj.setFilePath(files);
         runCPL = new CPLElection(parties);
-        runCPL.readFile(obj.getFilePath());
+        //Changed for running Voting; changed so that it just accepts electionFile instead of calling getfile from Voting
+        runCPL.readFile(electionFile);
         runCPL.firstSeatWaveAllocation();
     }
 

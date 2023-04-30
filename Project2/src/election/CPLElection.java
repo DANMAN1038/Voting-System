@@ -124,12 +124,13 @@ public class CPLElection extends IElection {
         try {
             myReader = new Scanner(fileLocation);
             String checkPartyType = myReader.nextLine();//first line, double check voting method
-            if(!checkPartyType.equals("CPL")) {
+            if(!checkPartyType.contains("CPL")) {
                 System.out.println(checkPartyType);
                 System.out.println("An error occurred, incorrect voting type");
                 System.exit(0);
             }
-            int numParties = Integer.parseInt(myReader.nextLine());//second line, hold and error check number of parties
+            String line = myReader.nextLine().replaceAll(",", "");
+            int numParties = Integer.parseInt(line);//second line, hold and error check number of parties
             if(numParties <= 0) {
                 System.out.println("No parties are provided in the file");
                 System.exit(0);
@@ -139,12 +140,14 @@ public class CPLElection extends IElection {
                 partyVotes.put(party, 0);//initialize party vote map with the name of the parties (keys) and default 0
                 partySeats.put(party, 0);
             }
-            numSeats = Integer.parseInt(myReader.nextLine());
+            String seatLine = myReader.nextLine().replaceAll(",", "");
+            numSeats = Integer.parseInt(seatLine);
             if(numSeats <= 0) {
                 System.out.println("No number of seats are provided in the file");
                 System.exit(0);
             }
-            int numBallots = Integer.parseInt(myReader.nextLine());
+            String ballotLine = myReader.nextLine().replaceAll(",", "");
+            int numBallots = Integer.parseInt(ballotLine);
             if(numBallots <= 0) {
                 System.out.println("No number of ballots are provided in the file");
                 System.exit(0);

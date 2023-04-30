@@ -1,10 +1,14 @@
 package election;
+import java.awt.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.util.Arrays;
 import java.util.Date;
 import objects.*;
+
+import javax.swing.*;
 import java.util.Random;
 
 /**The IRElection class to be used to produce where the Instant Runoff Election is executed
@@ -21,9 +25,10 @@ public class IRElection extends IElection {
      * @param winner The winner of the election
      * @param candidates All candidates participating in the election
      */
-    public IRElection(Candidate winner, ArrayList<Candidate> candidates) {
+    public IRElection(Candidate winner, ArrayList<Candidate> candidates, Date date) {
         this.winner = winner;
         this.candidates = candidates;
+        this.date = date;
     }
 
     /**
@@ -204,10 +209,18 @@ public class IRElection extends IElection {
      * Method to return the Date of the Election in String format
      * @return The String formatted date of the Election
      */
-    public String getDate() {
+    public String returnDate() {
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         String elecDate = df.format(this.date);
         return elecDate;
+    }
+
+    /**
+     * Method to return the get the Date Variable
+     * @return
+     */
+    public Date getDate() {
+        return this.date;
     }
 
     /**
@@ -242,5 +255,72 @@ public class IRElection extends IElection {
     public Candidate getWinner() {
 
         return this.winner;
+    }
+
+    /**
+     * Method to display the table showing the rounds of the IRV including how much votes the Candidates recieved each round
+     */
+    public void displayTable() {
+        // Create the table based on how many candidates participated
+        String[][] tableData = new String[candidates.size()+2][5];
+        int i = 0;
+
+for (Candidate c: candidates) {
+    tableData[i][0] = c.getName() + " | " + c.getParty();
+    int n = 1;
+    int total = 0;
+    for (Integer r: c.getRanks()) {
+        total = r + total;
+        tableData[i][n] = (r + "+ | " + total);
+        n++;
+    }
+    i++;
+}
+        tableData[5][0] = "WINNER";
+        tableData[5][2] = getWinner().getName();
+
+        // Create a new JTable with the table data
+        JTable table = new JTable(tableData, new String[]{"Candidates", "1st Round", "2nd Round", "3rd Round", "4th Round"});
+
+        // Create a new JPanel to hold the table
+        JPanel panel = new JPanel();
+
+
+        // Add the table to the panel
+        panel.add(new JScrollPane(table));
+
+        // Create a new JFrame to hold the panel
+        JFrame frame = new JFrame("IRV Round Totals");
+
+        // Set the cell renderer for each column to center the text
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
+        table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+
+        table.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (row == 5 && column == 0) {
+                    c.setBackground(Color.RED);
+                } else {
+                    c.setBackground(null);
+                }
+                return c;
+            }
+        });
+
+        // Set the JFrame properties
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(520, 175);
+
+        // Add the panel to the JFrame
+        frame.add(panel);
+
+        // Display the JFrame
+        frame.setVisible(true);
     }
 }

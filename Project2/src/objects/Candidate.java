@@ -12,6 +12,41 @@ public class Candidate {
     private ArrayList<Integer> ranks;
     private ArrayList<Ballot> votes;
     private Integer totalVotes;
+    private Integer votesPO;
+
+    /**
+     * Method to get the votes for PO Election
+     * @return
+     */
+    public Integer getVotesPO() {
+        return votesPO;
+    }
+
+    /**
+     * Method to set the votes for PO Election
+     * @param votesPO
+     */
+    public void setVotesPO(Integer votesPO) {
+        this.votesPO = votesPO;
+    }
+
+    /**
+     * Method to get the percentage of votes a Candidate has
+     * @return
+     */
+    public double getVotesPercentage() {
+        return votesPercentage;
+    }
+
+    /**
+     * Method to set the percentage of votes a candidate has
+     * @param votesPercentage
+     */
+    public void setVotesPercentage(double votesPercentage) {
+        this.votesPercentage = votesPercentage;
+    }
+
+    private double votesPercentage;
 
     /**
      * Method to return Ballot of Candidate
@@ -124,7 +159,14 @@ public class Candidate {
      * @return
      */
     public Integer getTotalVotes() {
-        return totalVotes;
+        int total = 0;
+
+        for (int vote : ranks) {
+            total += vote;
+        }
+
+        this.totalVotes = total;
+        return total;
     }
 
     /** Sets the total of all the votes the candidate has

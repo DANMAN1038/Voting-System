@@ -1,0 +1,6 @@
+Election Conducted: Closed Party List Election 
+Election Date: Sun Apr 30 03:41:25 CDT 2023
+The total votes in this election was: 9
+Party and Seat totals: {Democratic=3, Republican=2, New Wave=0, Reform=2, Green=1, Independent=1}
+Party and Vote totals: {Democratic=1, Republican=0, New Wave=0, Reform=0, Green=0, Independent=0}
+The Winner of The Election Was Democratic!

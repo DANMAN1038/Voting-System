@@ -1,9 +1,10 @@
-import objects.Ballot;
+
 import static org.junit.Assert.*;
+import objects.Ballot;
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.ArrayList;
 
 public class BallotTest {
 
@@ -11,35 +12,59 @@ public class BallotTest {
 
     @Before
     public void setUp() throws Exception {
-        ArrayList<Integer> votes = new ArrayList<>();
+        // Create a new Ballot object with some sample data for testing
+        ArrayList<Integer> votes = new ArrayList<Integer>();
         votes.add(1);
         votes.add(2);
         votes.add(3);
-        ballot = new Ballot(votes);
+        boolean validity = true;
+        ballot = new Ballot(votes, validity);
     }
 
     @Test
     public void testGetVotes() {
-        ArrayList<Integer> expected = new ArrayList<>();
-        expected.add(1);
-        expected.add(2);
-        expected.add(3);
-        assertEquals("The method to return the array list of votes of the ballot object",expected, ballot.getVotes());
+        // Test that the getVotes() method returns the correct votes ArrayList
+        ArrayList<Integer> expectedVotes = new ArrayList<Integer>();
+        expectedVotes.add(1);
+        expectedVotes.add(2);
+        expectedVotes.add(3);
+        assertEquals(expectedVotes, ballot.getVotes());
     }
 
     @Test
     public void testSetVotes() {
-        ArrayList<Integer> expected = new ArrayList<>();
-        expected.add(4);
-        expected.add(5);
-        expected.add(6);
-        ballot.setVotes(expected);
-        assertEquals("The method to set the votes for the ballot object",expected, ballot.getVotes());
+        // Test that the setVotes() method sets the votes ArrayList correctly
+        ArrayList<Integer> newVotes = new ArrayList<Integer>();
+        newVotes.add(4);
+        newVotes.add(5);
+        newVotes.add(6);
+        ballot.setVotes(newVotes);
+        assertEquals(newVotes, ballot.getVotes());
+    }
+
+    @Test
+    public void testIsValidity() {
+        // Test that the isValidity() method returns the correct validity boolean
+        assertTrue(ballot.isValidity());
+    }
+
+    @Test
+    public void testSetValidity() {
+        // Test that the setValidity() method sets the validity boolean correctly
+        boolean newValidity = false;
+        ballot.setValidity(newValidity);
+        assertFalse(ballot.isValidity());
     }
 
     @Test
     public void testGetPreference() {
-        ArrayList<String> expected = null;
-        assertNull(ballot.getPreference());
+        // Test that the getPreference() method returns the correct preference ArrayList
+        ArrayList<String> expectedPreference = new ArrayList<String>();
+        expectedPreference.add("John");
+        expectedPreference.add("Jane");
+        expectedPreference.add("Jim");
+        Ballot namedBallot = new Ballot(expectedPreference, 3);
+        assertEquals(expectedPreference, namedBallot.getPreference());
     }
+
 }

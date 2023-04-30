@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class Ballot {
     private ArrayList<String> preference;
     private ArrayList<Integer> votes;
+    private boolean validity;
 
     /**
      * Returns the array with all the votes
@@ -25,13 +26,33 @@ public class Ballot {
     }
 
     /**
+     * Gets the boolean validity variable
+     * @return
+     */
+    public boolean isValidity() {
+        return validity;
+    }
+
+    /**
+     * Sets the boolean validity variable
+     * @param validity
+     */
+    public void setValidity(boolean validity) {
+        this.validity = validity;
+    }
+
+    /**
      * constructor for the ballot object
      * @param votes represents all votes cast in the election
+     * @param validity
      */
-    public Ballot(ArrayList<Integer> votes) {
+    public Ballot(ArrayList<Integer> votes, boolean validity) {
 
         this.votes = votes;
+        this.validity = validity;
     }
+
+
 
     /**
      * Constructor for Ballot for election where named Candidate prefrence is given
