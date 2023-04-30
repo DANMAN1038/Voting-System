@@ -38,9 +38,9 @@ public class IRElectionTest {
         b3.add(4);
 
         // Create some candidates and with the predetermined ballots
-        Candidate c1 = new Candidate("Alice", null, (ArrayList<Integer>) b1);
-        Candidate c2 = new Candidate("Bob", null, (ArrayList<Integer>) b2);
-        Candidate c3 = new Candidate("Charlie", null, (ArrayList<Integer>) b3);
+        Candidate c1 = new Candidate("Alice", "Democrat", b1);
+        Candidate c2 = new Candidate("Bob", "Republican", b2);
+        Candidate c3 = new Candidate("Charlie", "Libertarian", b3);
         candidates = new ArrayList<Candidate>();
         candidates.add(c1);
         candidates.add(c2);
