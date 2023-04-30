@@ -26,8 +26,8 @@ public class CPLElectionTest {
 
     @Before
     public void setUp() {
-        //to run please change the directory to the directory of where you CPL_Election.csv file is located in the misc folder the project
-        electionFile = new File("C:/Users/omavi/OneDrive/Documents/GitHub/repo-Team20/Project2/misc/CPL_Election.csv");
+        //TODO to run please change the directory to the directory of where you CPL_Election.csv file is located in the misc folder the project
+        electionFile = new File("C:/Users/omavi/OneDrive/Documents/GitHub/repo-Team20/Project2/testing/Election_Files/CPL_Election.csv");
         ArrayList<File> files = new ArrayList<File>();
         files.add(electionFile);
         parties.add(party3);
